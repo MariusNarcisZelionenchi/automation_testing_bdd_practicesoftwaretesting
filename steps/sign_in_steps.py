@@ -8,7 +8,7 @@ def step_impl(context):
 
 @when('I insert "{email}" in the email field')
 def step_impl(context, email):
-    context.sign_in_page_obj.insert_email(email)
+    context.sign_in_page_obj.insert_invalid_credentials(email)
 
 
 @when('I insert "{password}" in the password field')
@@ -18,13 +18,13 @@ def step_impl(context, password):
 
 @when('I insert "{email}" as username and "{password}" as password')
 def step_impl(context, email, password):
-    context.sign_in_page_obj.insert_email(email)
+    context.sign_in_page_obj.insert_invalid_credentials(email)
     context.sign_in_page_obj.insert_password(password)
 
 
-@then('I cannot login into the account and i receive "{email_err}" error')
-def step_impl(context, email_err):
-    context.sign_in_page_obj.check_email_err_msg(email_err)
+@then('I cannot login with the "{email}" and "{password}" into the account and i receive "{email_err}" error')
+def step_impl(context, email, password, email_err):
+    context.sign_in_page_obj.insert_invalid_credentials(email, password, email_err)
 
 
 @when('I click the <<Login>> button')

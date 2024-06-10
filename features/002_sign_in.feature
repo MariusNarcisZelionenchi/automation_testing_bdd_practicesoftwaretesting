@@ -4,16 +4,24 @@ Feature: Test the functionality of the <<Sign In>> page
   Background:
     Given I am on the <<Home>> page and I navigate to <<Sign In>> page
 
+  @register
+  Scenario: Register a new account
+    When I click on the <<Register Your Account>> button
+    Then The <<Register>> page loads
+    When I fill in the required info
+    Then The <<Sign In>> page loads
+
   @invalid_login
   Scenario Outline: Check that you cannot login when providing invalid credentials
-    When I insert "<email>" as username and "<password>" as password
-    When I click the <<Login>> button
-    Then I cannot login into the account and i receive "<email_err>" error
-    Then Clear input
+    Then I cannot login with the "<email>" and "<password>" into the account and i receive "<email_err>" error
+#    Then Clear input
     Examples:
-      | email    | password | email_err               |
-      | blank    | password | Email is required       |
-      | no_email | password | Email format is invalid |
+      | email            | password | email_err                                                                   |
+      | blank            | pass1    | Email is required                                                           |
+      | no_email         | pass2    | Email format is invalid                                                     |
+      | registered_email | pass3    | Invalid email or password                                                   |
+      | registered_email | pass4    | Account locked, too many failed attempts. Please contact the administrator. |
+
 
   @credentials_error
   Scenario: Check that "Invalid email or password" message appears when an unregistered email is inserted
@@ -21,14 +29,14 @@ Feature: Test the functionality of the <<Sign In>> page
     When I insert "password" in the password field
     When I click the <<Login>> button
     Then The credentials error message appears. The credentials error message is "Invalid email or password"
-    Then Clear input
+#    Then Clear input
 
   @password_length
   Scenario: Check that "Password length is invalid" message appears when the length of the password is less than 3 character
     When I insert "some_email@email.com" in the email field and a 1 or 2 characters password in the password field
     When I click the <<Login>> button
     Then The password error message appears. The password error message is "Password length is invalid"
-    Then Clear input
+#    Then Clear input
 
   @skip @register_using_parameters
   Scenario: Register new account using parameters
@@ -64,13 +72,6 @@ Feature: Test the functionality of the <<Sign In>> page
     When I input a random <<Email Address>>
     When I input a random <<Password>>
     When I click on the <<Register>> button
-    Then The <<Sign In>> page loads
-
-  @register
-  Scenario: Register a new account
-    When I click on the <<Register Your Account>> button
-    Then The <<Register>> page loads
-    When I fill in the required info
     Then The <<Sign In>> page loads
 
   @valid_login

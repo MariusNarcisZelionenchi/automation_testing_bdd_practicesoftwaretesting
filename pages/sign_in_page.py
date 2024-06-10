@@ -44,20 +44,43 @@ class SignInPage(BasePage):
     def navigate_to_register(self):
         self.url(self.URL_REGISTER)
 
-    def insert_email(self, email):
+    def insert_invalid_credentials(self, email, password, email_err):
         if email == 'blank':
             email = chr(32)
-        else:
             self.write_txt(self.FIELD_EMAIL, email)
-
-    def insert_password(self, password):
-        self.write_txt(self.FIELD_PASSWORD, password)
+            self.write_txt(self.FIELD_PASSWORD, password)
+            self.click_login()
+            assert email_err == self.read_txt(self.ERR_EMAIL)
+            self.clear_fields()
+        elif email == 'no_email':
+            self.write_txt(self.FIELD_EMAIL, email)
+            self.write_txt(self.FIELD_PASSWORD, password)
+            self.click_login()
+            assert email_err == self.read_txt(self.ERR_EMAIL)
+            self.clear_fields()
+        elif email == 'registered_email':
+            for i in range(3):
+                email = self.random_email
+                self.write_txt(self.FIELD_EMAIL, email)
+                self.write_txt(self.FIELD_PASSWORD, password)
+                self.click_login()
+                WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.ERR_CREDENTIALS))
+                assert email_err == self.read_txt(self.ERR_CREDENTIALS)
+                self.clear_fields()
+                i += 1
+        else:
+            pass
 
     def click_login(self):
         self.click_elem(self.BTN_LOGIN)
 
-    def check_email_err_msg(self, email_err):
-        assert self.is_elem_displayed(self.ERR_EMAIL), email_err in self.read_txt(self.ERR_EMAIL)
+    def check_email_err_msg(self,email, email_err):
+        if email == 'blank':
+            assert email_err == self.read_txt(self.ERR_EMAIL)
+        elif email == 'no_email':
+           assert email_err == self.read_txt(self.ERR_EMAIL)
+        elif email == 'registered_email':
+            assert email_err == self.read_txt(self.ERR_CREDENTIALS)
 
     def check_credentials_err(self, credentials_err):
         assert self.is_elem_displayed(self.ERR_CREDENTIALS), credentials_err in self.read_txt(self.ERR_CREDENTIALS)
