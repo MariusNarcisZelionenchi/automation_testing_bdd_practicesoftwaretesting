@@ -1,0 +1,15 @@
+-pt update git: git update-git-for-windows
+
+
+
+
+#initializare fisier:
+git init
+#adaugam fisierle pe care vrem sa le incarcam:
+git add .
+#email:
+git config --global user.email "marius.zelionenchi@gmail.com"
+#user:
+git config --global user.name "Marius"
+#dam calea:
+git remote add origin https..........(copy/paste la link din git)
