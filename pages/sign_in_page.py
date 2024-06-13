@@ -31,6 +31,8 @@ class SignInPage(BasePage):
     INPUT_EMAIL = (By.ID, 'email')
     INPUT_PASSWORD = (By.ID, 'password')
     BTN_SUBMIT = (By.XPATH, '//button[@type="submit"]')
+    BTN_USER_DROPDOWN = (By.ID, 'menu')
+    BTN_SIGN_OUT = (By.XPATH, '//a[@data-test="nav-sign-out"]')
     fake = Faker(locale='ro')
     fake_password = fake.password(10, True, True, True, True)
     fake_email = fake.email()
@@ -41,8 +43,14 @@ class SignInPage(BasePage):
         WebDriverWait(self.driver, 2).until(EC.url_matches(self.URL_SIGN_IN))  # trebuie sa astept pentru ca pag sa se incarce
         assert self.actual_url() == self.URL_SIGN_IN
 
+    def navigate_to_home(self):
+        self.url(self.URL_HOME)
+
     def navigate_to_register(self):
         self.url(self.URL_REGISTER)
+
+    def navigate_to_sign_in(self):
+        self.url(self.URL_SIGN_IN)
 
     def insert_invalid_credentials(self, email, password, email_err):
         if email == 'blank':
@@ -78,7 +86,7 @@ class SignInPage(BasePage):
         if email == 'blank':
             assert email_err == self.read_txt(self.ERR_EMAIL)
         elif email == 'no_email':
-           assert email_err == self.read_txt(self.ERR_EMAIL)
+            assert email_err == self.read_txt(self.ERR_EMAIL)
         elif email == 'registered_email':
             assert email_err == self.read_txt(self.ERR_CREDENTIALS)
 
@@ -232,3 +240,7 @@ class SignInPage(BasePage):
         self.write_txt(self.FIELD_EMAIL, self.fake_email)
         self.write_txt(self.FIELD_PASSWORD, self.fake_password)
         time.sleep(1)
+
+    def sign_out(self):
+        self.click_elem(self.BTN_USER_DROPDOWN)
+        self.click_elem(self.BTN_SIGN_OUT)

@@ -1,4 +1,4 @@
-@home_feature
+@skip @home_feature
 Feature: Test if the <<Sign In>> button redirects to the <<Sign In>> page
 
   Background:

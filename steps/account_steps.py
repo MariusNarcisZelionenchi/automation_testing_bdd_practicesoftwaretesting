@@ -51,9 +51,9 @@ def step_impl(context):
     context.account_page_obj.set_new_amount()
 
 
-@then('New <<Total Unit Price>> is "{factor}" times the <<Unit Price>>')
-def step_impl(context, factor):
-    context.account_page_obj.check_total_unit_price(factor)
+@then('New <<Total Unit Price>> is 2 times the <<Unit Price>>')
+def step_impl(context):
+    context.account_page_obj.check_total_unit_price()
 
 
 @when('I click on <<Proceed to checkout>> 1st button')
@@ -84,3 +84,18 @@ def step_impl(context):
 @then('Payment method is requested')
 def step_impl(context):
     context.account_page_obj.is_payment_msg_displayed()
+
+
+@when('I check if a user is logged in')
+def step_impl(context):
+    context.account_page_obj.check_if_user_is_logged_in()
+
+
+@when('I sign the user out')
+def step_impl(context):
+    context.account_page_obj.sign_out()
+
+
+@then('The <<Sign In>> button is displayed')
+def step_impl(context):
+    context.account_page_obj.is_sign_in_btn_displayed()

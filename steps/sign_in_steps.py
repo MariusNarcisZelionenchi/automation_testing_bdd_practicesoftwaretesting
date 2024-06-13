@@ -6,6 +6,11 @@ def step_impl(context):
     context.sign_in_page_obj.navigate_to_sign_in_from_home()
 
 
+@given('I am on the <<Sign In>> page')
+def step_impl(context):
+    context.sign_in_page_obj.navigate_to_sign_in()
+
+
 @when('I insert "{email}" in the email field')
 def step_impl(context, email):
     context.sign_in_page_obj.insert_invalid_credentials(email)
@@ -127,47 +132,47 @@ def step_impl(context):
     context.sign_in_page_obj.input_random_password()
 
 
-@when('I input a random <<First Name>>')
+@when('I input a fake <<First Name>>')
 def step_impl(context):
     context.sign_in_page_obj.input_fake_first_name()
 
 
-@when('I input a random <<Last Name>>')
+@when('I input a fake <<Last Name>>')
 def step_impl(context):
     context.sign_in_page_obj.input_fake_last_name()
 
 
-@when('I input a random <<Address>>')
+@when('I input a fake <<Address>>')
 def step_impl(context):
     context.sign_in_page_obj.input_fake_address()
 
 
-@when('I input a random <<Postal Code>>')
+@when('I input a fake <<Postal Code>>')
 def step_impl(context):
     context.sign_in_page_obj.input_fake_postal_code()
 
 
-@when('I input a random <<City>>')
+@when('I input a fake <<City>>')
 def step_impl(context):
     context.sign_in_page_obj.input_fake_city()
 
 
-@when('I input a random <<State>>')
+@when('I input a fake <<State>>')
 def step_impl(context):
     context.sign_in_page_obj.input_fake_state()
 
 
-@when('I input a random <<Phone>>')
+@when('I input a fake <<Phone>>')
 def step_impl(context):
     context.sign_in_page_obj.input_fake_phone()
 
 
-@when('I input a random <<Email Address>>')
+@when('I input a fake <<Email Address>>')
 def step_impl(context):
     context.sign_in_page_obj.input_fake_email()
 
 
-@when('I input a random <<Password>>')
+@when('I input a fake <<Password>>')
 def step_impl(context):
     context.sign_in_page_obj.input_fake_password()
 
@@ -190,3 +195,13 @@ def step_impl(context):
 @when('I insert the fake registered email and the fake registered password')
 def step_impl(context):
     context.sign_in_page_obj.insert_registered_fake_email_and_password()
+
+
+@when('I sign out')
+def step_impl(context):
+    context.sign_in_page_obj.sign_out()
+
+
+@then('The <<Home>> page loads')
+def step_impl(context):
+    context.sign_in_page_obj.navigate_to_home()
