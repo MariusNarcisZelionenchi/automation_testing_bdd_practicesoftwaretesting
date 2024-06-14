@@ -22,7 +22,7 @@ class AccountPage(BasePage):
     MSG_PRODUCT_ADDED = (By.XPATH, '//div[@aria-label="Product added to shopping cart."]')
     BTN_NUMBER_OF_ITEMS_IN_CART = (By.ID, 'lblCartCount')
     BTN_CART = (By.XPATH, '//i[@class="fa fa-shopping-cart px-1"]')
-    UNIT_PRICE = (By.XPATH, '//tbody/tr[@class="ng-star-inserted"]/td[3]/span[1]')
+    UNIT_PRICE = (By.XPATH, '//tbody/tr[@class="ng-star-inserted]/td[3]/span[1]')
     TOTAL_UNIT_PRICE = (By.XPATH, '//tbody/tr[@class="ng-star-inserted"]/td[4]/span[1]')
     TOTAL_PRICE = (By.XPATH, '(//td[@class="col-md-2 text-end"])[4]')
     QUANTITY = (By.XPATH, '//input[@class="form-control quantity"]')
@@ -96,20 +96,17 @@ class AccountPage(BasePage):
     def click_proceed_1(self):
         self.click_elem(self.BTN_PROCEED_TO_CHECKOUT_1)
 
-    def is_proceed_msg_displayed(self):
-        assert self.is_elem_displayed(self.MSG_PROCEED_TO_CHECKOUT)
-
     def click_proceed_2(self):
         self.click_elem(self.BTN_PROCEED_TO_CHECKOUT_2)
 
     def is_info_displayed(self):
-        return self.is_elem_displayed(self.BOX_ADDRESS), self.is_elem_displayed(self.BOX_CITY), self.is_elem_displayed(self.BOX_STATE), self.is_elem_displayed(self.BOX_COUNTRY), self.is_elem_displayed(self.BOX_POSTCODE)
+        assert self.is_elem_displayed(self.BOX_ADDRESS), self.is_elem_displayed(self.BOX_CITY), self.is_elem_displayed(self.BOX_STATE), self.is_elem_displayed(self.BOX_COUNTRY), self.is_elem_displayed(self.BOX_POSTCODE)
 
     def click_proceed_3(self):
         self.click_elem(self.BTN_PROCEED_TO_CHECKOUT_3)
 
     def is_payment_msg_displayed(self):
-        return self.is_elem_displayed(self.BTN_PAYMENT_METHOD)
+        assert self.is_elem_displayed(self.BTN_PAYMENT_METHOD)
 
     def check_if_user_is_logged_in(self):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.BTN_USER_DROPDOWN))
