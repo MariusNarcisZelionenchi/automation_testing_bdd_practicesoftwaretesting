@@ -6,11 +6,16 @@ def step_impl(context):
     context.home_page_obj.navigate_to_home()
 
 
-@when('I click on the <<Sign In>> button')
-def step_impl(context):
-    context.home_page_obj.click_sign_in()
+@when('I select "{product}" category')
+def step_impl(context, product):
+    context.home_page_obj.select_product(product)
 
 
-@then('The <<Sign In>> page loads')
+@when('I click the <<Sort By>> arrow and I click the 3rd option')
 def step_impl(context):
-    context.home_page_obj.check_url_sign_in()
+    context.home_page_obj.sort_products_by_price()
+
+
+@then('The products are reordered')
+def step_impl(context):
+    context.home_page_obj.check_if_prices_are_reordered()

@@ -117,6 +117,10 @@ class SignInPage(BasePage):
         WebDriverWait(self.driver, 5).until(EC.url_matches(self.URL_ACCOUNT))  # trebuie sa ast pentru ca pag sa se incarce
         assert self.actual_url() == self.URL_ACCOUNT
 
+    def check_url_sign_in(self):
+        WebDriverWait(self.driver, 10).until(EC.url_matches(self.URL_SIGN_IN))  # trebuie sa ast pentru ca pag sa se incarce
+        assert self.actual_url() == self.URL_SIGN_IN
+
     ##################  REGISTER NEW ACCOUNT  ###################
 
     ##################        PARAMETERS      ###################

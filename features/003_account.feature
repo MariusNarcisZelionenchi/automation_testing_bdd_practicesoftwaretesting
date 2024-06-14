@@ -1,11 +1,5 @@
 @account_feature
 Feature: Check the functionality of the <<Account Page>>
-#  @logout
-#  Scenario: Check if a user is logged in and sign him out
-#    Given I am on the <<Home>> page
-#    When I check if a user is logged in
-#    When I sign the user out
-#    Then The <<Sign In>> button is displayed
 
   @register_using_faker
   Scenario: Register new account using faker
@@ -63,3 +57,12 @@ Feature: Check the functionality of the <<Account Page>>
 #     When I click the <<Confirm>> button
 #     Then The invoice message is displayed
 #     Then The cart is empty
+
+#@logout
+#Scenario: Check if a user is logged in and sign him out
+#  Given I am on the <<Home>> page and I navigate to <<Sign In>> page
+#  When I insert the fake registered email and the fake registered password
+#  When I click the <<Login>> button
+#  When I check if a user is logged in
+#  When I sign the user out
+#  Then The <<Sign In>> button is displayed

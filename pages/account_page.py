@@ -51,8 +51,8 @@ class AccountPage(BasePage):
         self.click_elem(self.BTN_SEARCH)
 
     def choose_item(self):
-        # WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(self.SECOND_ITEM))
-        time.sleep(2)
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.SECOND_ITEM))
+        # time.sleep(2)
         self.click_elem(self.SECOND_ITEM)
 
     def click_increase(self):

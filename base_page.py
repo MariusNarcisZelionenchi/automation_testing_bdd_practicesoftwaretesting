@@ -53,3 +53,8 @@ class BasePage(Browser):
         dropdown_elem = self.identify_elem(dropdown_locator)
         select = Select(dropdown_elem)
         select.select_by_visible_text(txt)
+
+    def click_checkbox(self, locator):
+        checkbox_element = self.identify_elem(locator)
+        if not checkbox_element.is_selected():
+            self.click_elem(locator)

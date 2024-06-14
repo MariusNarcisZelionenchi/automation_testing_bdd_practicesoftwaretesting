@@ -11,6 +11,11 @@ def step_impl(context):
     context.sign_in_page_obj.navigate_to_sign_in()
 
 
+@then('The <<Sign In>> page loads')
+def step_impl(context):
+    context.sign_in_page_obj.check_url_sign_in()
+
+
 @when('I insert "{email}" in the email field')
 def step_impl(context, email):
     context.sign_in_page_obj.insert_invalid_credentials(email)
