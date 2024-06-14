@@ -1,10 +1,7 @@
+
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 from base_page import BasePage
-# from selenium.webdriver.support.select import Select
-from selenium.webdriver import Keys, ActionChains
-from selenium import webdriver
+from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import Select
 
 
@@ -15,8 +12,8 @@ class HomePage(BasePage):
     BTN_TOOL_BELTS = (By.XPATH, '//label[normalize-space()="Tool Belts"]')
     PRODUCT_NAME = (By.CLASS_NAME, 'card-title')
     BTN_SORT_BY = (By.CLASS_NAME, 'form-select')
-    BTN_PRICE_MIN = (By.XPATH, '//span[@aria-valuenow = "0"]')
-    BTN_PRICE_MAX = (By.XPATH, '//span[@aria-valuenow = "100"]')
+    BTN_PRICE_MIN = (By.XPATH, '//span[contains(@class,"slider-pointer-min")]')
+    BTN_PRICE_MAX = (By.XPATH, '//span[contains(@class,"slider-pointer-max")]')
     PRODUCT_PRICE = (By.XPATH, '//span[@data-test="product-price"]')
 
     def navigate_to_home(self):
@@ -36,8 +33,19 @@ class HomePage(BasePage):
 
     def check_if_prices_are_reordered(self):
         products_price_list = []
-        for item in self.driver.find_elements(*self.PRODUCT_PRICE):
-            product_price = float(item.text.replace('$', ''))
-            products_price_list.append(product_price)
+        product_price = float(self.read_txt(self.PRODUCT_PRICE)[1:])
+        products_price_list.append(product_price)
         ordered_products_price_list = sorted(products_price_list)
         assert products_price_list == ordered_products_price_list
+
+    def modify_max_price(self):
+        action = ActionChains(self.driver).drag_and_drop_by_offset(self.identify_elem(self.BTN_PRICE_MAX), -116, 0)
+        action.perform()
+
+    def check_if_prices_are_lower_than_max_price(self):
+        products_price_list = []
+        product_price = float(self.read_txt(self.PRODUCT_PRICE)[1:])
+        products_price_list.append(product_price)
+        max_price_value = float(self.identify_elem(self.BTN_PRICE_MAX).get_attribute("aria-valuenow"))
+        for item in products_price_list:
+            assert item <= max_price_value

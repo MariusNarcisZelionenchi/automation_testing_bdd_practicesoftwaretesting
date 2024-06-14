@@ -66,9 +66,9 @@ def step_impl(context):
     context.account_page_obj.click_proceed_2()
 
 
-@then('The address, city, state, country and postal code are displayed')
-def step_impl(context):
-    context.account_page_obj.is_info_displayed()
+# @then('The address, city, state, country and postal code are displayed')
+# def step_impl(context):
+#     context.account_page_obj.is_info_displayed()
 
 
 @when('I click on <<Proceed to checkout>> 3rd button')

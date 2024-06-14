@@ -19,3 +19,13 @@ def step_impl(context):
 @then('The products are reordered')
 def step_impl(context):
     context.home_page_obj.check_if_prices_are_reordered()
+
+
+@when('I click on the max price and drag it to the left')
+def step_impl(context):
+    context.home_page_obj.modify_max_price()
+
+
+@then('The page displays only products with a price lower than the new max price')
+def step_impl(context):
+    context.home_page_obj.check_if_prices_are_lower_than_max_price()

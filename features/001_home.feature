@@ -10,5 +10,5 @@ Feature: Test the functionality if the <<Home>> page
     When I select "Tool Belts" category
     When I click the <<Sort By>> arrow and I click the 3rd option
     Then The products are reordered
-#    When I click on the max price and drag it until the new max price is 15
-#    Then The page displays only products with a price < 15
+    When I click on the max price and drag it to the left
+    Then The page displays only products with a price lower than the new max price

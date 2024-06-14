@@ -99,8 +99,8 @@ class AccountPage(BasePage):
     def click_proceed_2(self):
         self.click_elem(self.BTN_PROCEED_TO_CHECKOUT_2)
 
-    def is_info_displayed(self):
-        assert self.is_elem_displayed(self.BOX_ADDRESS), self.is_elem_displayed(self.BOX_CITY), self.is_elem_displayed(self.BOX_STATE), self.is_elem_displayed(self.BOX_COUNTRY), self.is_elem_displayed(self.BOX_POSTCODE)
+    # def is_info_displayed(self):
+    #     assert self.is_elem_displayed(self.BOX_ADDRESS) and self.is_elem_displayed(self.BOX_CITY) and self.is_elem_displayed(self.BOX_STATE) and self.is_elem_displayed(self.BOX_COUNTRY) and self.is_elem_displayed(self.BOX_POSTCODE)
 
     def click_proceed_3(self):
         self.click_elem(self.BTN_PROCEED_TO_CHECKOUT_3)
