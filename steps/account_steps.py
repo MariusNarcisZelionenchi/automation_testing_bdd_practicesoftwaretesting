@@ -63,7 +63,7 @@ def step_impl(context):
 
 @then('The <<Proceed to checkout>> message is displayed')
 def step_impl(context):
-    assert context.account_page_obj.is_proceed_msg_displayed()
+    context.account_page_obj.is_proceed_msg_displayed()
 
 
 @when('I click on <<Proceed to checkout>> 2nd button')

@@ -22,8 +22,8 @@ class AccountPage(BasePage):
     MSG_PRODUCT_ADDED = (By.XPATH, '//div[@aria-label="Product added to shopping cart."]')
     BTN_NUMBER_OF_ITEMS_IN_CART = (By.ID, 'lblCartCount')
     BTN_CART = (By.XPATH, '//i[@class="fa fa-shopping-cart px-1"]')
-    UNIT_PRICE = (By.XPATH, '/html/body/app-root/div/app-checkout/aw-wizard/div/aw-wizard-step[1]/app-cart/div/table/tbody/tr/td[3]/span')
-    TOTAL_UNIT_PRICE = (By.XPATH, '/html/body/app-root/div/app-checkout/aw-wizard/div/aw-wizard-step[1]/app-cart/div/table/tbody/tr/td[4]/span')
+    UNIT_PRICE = (By.XPATH, '//tbody/tr[@class="ng-star-inserted"]/td[3]/span[1]')
+    TOTAL_UNIT_PRICE = (By.XPATH, '//tbody/tr[@class="ng-star-inserted"]/td[4]/span[1]')
     TOTAL_PRICE = (By.XPATH, '(//td[@class="col-md-2 text-end"])[4]')
     QUANTITY = (By.XPATH, '//input[@class="form-control quantity"]')
     BTN_PROCEED_TO_CHECKOUT_1 = (By.XPATH, '//button[@data-test="proceed-1"]')
@@ -97,7 +97,7 @@ class AccountPage(BasePage):
         self.click_elem(self.BTN_PROCEED_TO_CHECKOUT_1)
 
     def is_proceed_msg_displayed(self):
-        return self.is_elem_displayed(self.MSG_PROCEED_TO_CHECKOUT)
+        assert self.is_elem_displayed(self.MSG_PROCEED_TO_CHECKOUT)
 
     def click_proceed_2(self):
         self.click_elem(self.BTN_PROCEED_TO_CHECKOUT_2)
