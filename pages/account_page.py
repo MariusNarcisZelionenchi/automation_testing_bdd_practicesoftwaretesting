@@ -14,7 +14,7 @@ class AccountPage(BasePage):
     BTN_LOGO = (By.ID, 'Layer_1')
     FIELD_SEARCH = (By.ID, 'search-query')
     BTN_SEARCH = (By.XPATH, '//button[@class="btn btn-secondary"]')
-    SECOND_ITEM = (By.XPATH, '//a[@class="card"][2]')
+    CHOSEN_ITEM = (By.XPATH, '//h5[normalize-space()="Belt Sander"]')
     ITEM_PRICE = (By.XPATH, '//span[@aria-label="unit-price"]')
     BTN_INCREASE = (By.XPATH, '//i[@class="fa fa-plus"]')
     BTN_DECREASE = (By.XPATH, '//i[@class="fa fa-minus"]')
@@ -22,8 +22,8 @@ class AccountPage(BasePage):
     MSG_PRODUCT_ADDED = (By.XPATH, '//div[@aria-label="Product added to shopping cart."]')
     BTN_NUMBER_OF_ITEMS_IN_CART = (By.ID, 'lblCartCount')
     BTN_CART = (By.XPATH, '//i[@class="fa fa-shopping-cart px-1"]')
-    UNIT_PRICE = (By.XPATH, '//tbody/tr[@class="ng-star-inserted]/td[3]/span[1]')
-    TOTAL_UNIT_PRICE = (By.XPATH, '//tbody/tr[@class="ng-star-inserted"]/td[4]/span[1]')
+    UNIT_PRICE = (By.XPATH, '/html/body/app-root/div/app-checkout/aw-wizard/div/aw-wizard-step[1]/app-cart/div/table/tbody/tr/td[3]/span')
+    TOTAL_UNIT_PRICE = (By.XPATH, '/html/body/app-root/div/app-checkout/aw-wizard/div/aw-wizard-step[1]/app-cart/div/table/tbody/tr/td[4]/span')
     TOTAL_PRICE = (By.XPATH, '(//td[@class="col-md-2 text-end"])[4]')
     QUANTITY = (By.XPATH, '//input[@class="form-control quantity"]')
     BTN_PROCEED_TO_CHECKOUT_1 = (By.XPATH, '//button[@data-test="proceed-1"]')
@@ -51,9 +51,9 @@ class AccountPage(BasePage):
         self.click_elem(self.BTN_SEARCH)
 
     def choose_item(self):
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.SECOND_ITEM))
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.CHOSEN_ITEM))
         # time.sleep(2)
-        self.click_elem(self.SECOND_ITEM)
+        self.click_elem(self.CHOSEN_ITEM)
 
     def click_increase(self):
         self.click_elem(self.BTN_INCREASE)

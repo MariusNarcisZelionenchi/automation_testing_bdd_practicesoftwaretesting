@@ -37,6 +37,7 @@ class HomePage(BasePage):
         products_price_list.append(product_price)
         ordered_products_price_list = sorted(products_price_list)
         assert products_price_list == ordered_products_price_list
+        print(products_price_list, ordered_products_price_list)
 
     def modify_max_price(self):
         action = ActionChains(self.driver).drag_and_drop_by_offset(self.identify_elem(self.BTN_PRICE_MAX), -116, 0)
