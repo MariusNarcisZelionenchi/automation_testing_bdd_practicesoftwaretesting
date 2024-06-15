@@ -172,3 +172,5 @@ def check_if_prices_are_reordered(self):
     ordered_products_price_list = sorted(products_price_list)
     assert products_price_list == ordered_products_price_list
     print(products_price_list, ordered_products_price_list)
+
+    pass
