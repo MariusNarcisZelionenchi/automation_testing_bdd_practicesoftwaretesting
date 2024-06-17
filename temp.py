@@ -173,4 +173,10 @@ def check_if_prices_are_reordered(self):
     assert products_price_list == ordered_products_price_list
     print(products_price_list, ordered_products_price_list)
 
-    pass
+
+# from faker import Faker
+#
+# fake = Faker(locale='it')
+#
+# print(fake.state())
+# print(fake.city())
