@@ -4,6 +4,7 @@ from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support.ui import Select
 
 from base_page import BasePage
 
@@ -38,6 +39,21 @@ class AccountPage(BasePage):
     BTN_PAYMENT_METHOD = (By.ID, 'payment-method')
     BTN_USER_DROPDOWN = (By.ID, 'menu')
     BTN_SIGN_OUT = (By.XPATH, '//a[@data-test="nav-sign-out"]')
+    BOX_BANK_NAME = (By.XPATH, '//input[@id="bank_name"]')
+    BOX_ACCOUNT_NAME = (By.XPATH, '//input[@id="account_name"]')
+    BOX_ACCOUNT_NUMBER = (By.XPATH, '//input[@id="account_number"]')
+    BTN_CONFIRM = (By.XPATH, '//button[normalize-space()="Confirm"]')
+    BOX_CREDIT_CARD_NUMBER = (By.XPATH, '//input[@id="credit_card_number"]')
+    BOX_EXPIRATION_DATE = (By.XPATH, '//input[@id="expiration_date"]')
+    BOX_CVV = (By.XPATH, '//input[@id="cvv"]')
+    BOX_CARD_HOLDER_NAME = (By.XPATH, '//input[@id="card_holder-name"]')
+    BTN_MONTHLY_INSTALLMENTS = (By.XPATH, '//select[@id="monthly_installments"]')
+    BOX_GIFT_CARD_NUMBER = (By.XPATH, '//input[@id="gift_card_number"]')
+    BOX_VALIDATION_CODE = (By.XPATH, '//input[@id="validation_code"]')
+    PAYMENT_CONFIRMATION_MSG = (By.XPATH, '//div[@class="help-block"]')
+    INVOICE_MSG = (By.XPATH, '//div[@id="order-confirmation"]')
+
+
 
     def navigate_to_account(self):
         self.url(self.URL_ACCOUNT)
@@ -105,8 +121,43 @@ class AccountPage(BasePage):
     def click_proceed_3(self):
         self.click_elem(self.BTN_PROCEED_TO_CHECKOUT_3)
 
-    def is_payment_msg_displayed(self):
+    def is_payment_method_displayed(self):
         assert self.is_elem_displayed(self.BTN_PAYMENT_METHOD)
+
+    def select_payment_method(self, payment_method):
+        iban = Select(self.identify_elem(self.BTN_PAYMENT_METHOD))
+        if iban.select_by_visible_text(payment_method) == 'Bank Transfer':
+            self.write_txt(self.BOX_BANK_NAME, 'Iron Bank of Braavos')
+            self.write_txt(self.BOX_ACCOUNT_NAME, 'Tycho Nestoris')
+            self.write_txt(self.BOX_ACCOUNT_NAME, '010101010101010101')
+            self.click_elem(self.BTN_CONFIRM)
+        elif iban.select_by_visible_text(payment_method) == 'Cash on Delivery':
+            self.click_elem(self.BTN_CONFIRM)
+        elif iban.select_by_visible_text(payment_method) == 'Credit Card':
+            self.write_txt(self.BOX_CREDIT_CARD_NUMBER, '1234-1234-1234-1234')
+            self.write_txt(self.BOX_EXPIRATION_DATE, '03/2028')
+            self.write_txt(self.BOX_CVV, '111')
+            self.write_txt(self.BOX_CARD_HOLDER_NAME, 'Card Holder')
+            self.click_elem(self.BTN_CONFIRM)
+        elif iban.select_by_visible_text(payment_method) == 'Buy Now Pay Later':
+            installments = Select(self.identify_elem(self.BTN_MONTHLY_INSTALLMENTS))
+            installments.select_by_visible_text('9 Monthly Installments')
+            self.click_elem(self.BTN_CONFIRM)
+        elif iban.select_by_visible_text(payment_method) == 'Gift Card':
+            self.write_txt(self.BOX_GIFT_CARD_NUMBER, 'mnz1234')
+            self.write_txt(self.BOX_VALIDATION_CODE, '170379')
+            self.click_elem(self.BTN_CONFIRM)
+
+    def check_confirmation_msg(self, confirmation_msg):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.PAYMENT_CONFIRMATION_MSG))
+        assert self.is_elem_displayed(self.PAYMENT_CONFIRMATION_MSG) and self.read_txt(self.PAYMENT_CONFIRMATION_MSG) == confirmation_msg
+
+    def click_confirm_btn(self):
+        self.click_elem(self.BTN_CONFIRM)
+
+    def check_invoice_msg(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.INVOICE_MSG))
+        assert self.is_elem_displayed(self.INVOICE_MSG)
 
     def check_if_user_is_logged_in(self):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.BTN_USER_DROPDOWN))

@@ -40,30 +40,25 @@ Feature: Check the functionality of the <<Account Page>>
     When I click on the <<Shopping Cart>>
     When I click on the quantity, delete the amount, increase the amount by 1 and hit enter
     Then New <<Total Unit Price>> is 2 times the <<Unit Price>>
-    When I click on <<Proceed to checkout>> 1st button
-    When I click on <<Proceed to checkout>> 2nd button
-    When I click on <<Proceed to checkout>> 3rd button
-    Then Payment method is requested
 
-#   Scenario Outline: Check that all payment methods work
-#     When click pe dropdown
-#     When click pe "<Bank Transfer>"
-#     Then <<Bank Name>>, <<Account Name>> and <<Account number>> appear
-#     When I insert the bank name "Banca"
-#     When I insert the account name "Cont"
-#     When I insert the account number "010101010101010101"
-#     When I click the <<Confirm>> button
-#     Then The confirmation message is displayed
-#     Then The message reads "Payment was successful"
-#     When I click the <<Confirm>> button
-#     Then The invoice message is displayed
-#     Then The cart is empty
+  @buy
+  Scenario: Check that I can buy a product
+     Given I am on the <<Account>> page
+     When I click on the <<Shopping Cart>>
+     When I click on <<Proceed to checkout>> 1st button
+     When I click on <<Proceed to checkout>> 2nd button
+     When I click on <<Proceed to checkout>> 3rd button
+     Then Payment method is requested
+     When I select "Bank Transfer" as desired payment method
+     Then The confirmation message "Payment was successful" is displayed
+     When I click the <<Confirm>> button
+     Then The invoice message is displayed
 
-#@logout
-#Scenario: Check if a user is logged in and sign him out
-#  Given I am on the <<Home>> page and I navigate to <<Sign In>> page
-#  When I insert the fake registered email and the fake registered password
-#  When I click the <<Login>> button
-#  When I check if a user is logged in
-#  When I sign the user out
-#  Then The <<Sign In>> button is displayed
+  @logout
+  Scenario: Check if a user is logged in and sign him out
+    Given I am on the <<Home>> page and I navigate to <<Sign In>> page
+    When I insert the fake registered email and the fake registered password
+    When I click the <<Login>> button
+    When I check if a user is logged in
+    When I sign the user out
+    Then The <<Sign In>> button is displayed

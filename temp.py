@@ -158,20 +158,20 @@ from selenium.webdriver.support import expected_conditions as EC
 from seleniumbase import Driver
 from selenium.webdriver.support.ui import Select
 
-driver = Driver()
-driver.get('https://practicesoftwaretesting.com/#/')
-PRODUCT_PRICE = (By.XPATH, '//span[@data-test="product-price"]')
-BTN_SORT_BY = (By.CLASS_NAME, 'form-select')
-def sort_products_by_price(self):
-    sort = Select(self.identify_elem(self.BTN_SORT_BY))
-    sort.select_by_visible_text('Price (High - Low)')
-def check_if_prices_are_reordered(self):
-    products_price_list = []
-    product_price = float(self.read_txt(self.PRODUCT_PRICE)[1:])
-    products_price_list.append(product_price)
-    ordered_products_price_list = sorted(products_price_list)
-    assert products_price_list == ordered_products_price_list
-    print(products_price_list, ordered_products_price_list)
+# driver = Driver()
+# driver.get('https://practicesoftwaretesting.com/#/')
+# PRODUCT_PRICE = (By.XPATH, '//span[@data-test="product-price"]')
+# BTN_SORT_BY = (By.CLASS_NAME, 'form-select')
+# def sort_products_by_price(self):
+#     sort = Select(self.identify_elem(self.BTN_SORT_BY))
+#     sort.select_by_visible_text('Price (High - Low)')
+# def check_if_prices_are_reordered(self):
+#     products_price_list = []
+#     product_price = float(self.read_txt(self.PRODUCT_PRICE)[1:])
+#     products_price_list.append(product_price)
+#     ordered_products_price_list = sorted(products_price_list)
+#     assert products_price_list == ordered_products_price_list
+#     print(products_price_list, ordered_products_price_list)
 
 
 # from faker import Faker
@@ -180,3 +180,10 @@ def check_if_prices_are_reordered(self):
 #
 # print(fake.state())
 # print(fake.city())
+
+
+def my_func(my_param):
+    print(f'Functia "my_func" are parametrul {my_param}')
+
+my_func('my_arg')
+#OUTPUT: Functia "my_func" are parametrul my_arg

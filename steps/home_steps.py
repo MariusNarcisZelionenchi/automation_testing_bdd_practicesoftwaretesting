@@ -25,7 +25,6 @@ def step_impl(context):
 def step_impl(context, text):
     context.home_page_obj.insert_msg(text)
 
-
 @when('I choose a file to upload')
 def step_impl(context):
     context.home_page_obj.choose_file_to_upload()

@@ -1,5 +1,5 @@
 import time
-
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from base_page import BasePage
 from selenium.webdriver import ActionChains
@@ -22,7 +22,7 @@ class HomePage(BasePage):
     EMAIL_INPUT = (By.XPATH, '//input[@id="email"]')
     SELECT_SUBJECT_DROPDOWN = (By.XPATH, '//select[@id="subject"]')
     MESSAGE_INPUT = (By.XPATH, '//textarea[@id="message"]')
-    CHOOSE_FILE = (By.XPATH, '//input[@id="attachment"]')
+    CHOOSE_FILE_BTN = (By.XPATH, '//input[@id="attachment"]')
     SEND_BTN = (By.XPATH, '//input[@value="Send"]')
     CONTACT_MSG = (By.XPATH, '//div[@role="alert"]')
 
@@ -45,8 +45,8 @@ class HomePage(BasePage):
         self.write_txt(self.MESSAGE_INPUT, text)
 
     def choose_file_to_upload(self):
-        self.click_elem(self.CHOOSE_FILE)
-        time.sleep(2)  #trebuie time.sleep pentru ca wait nu functioneaza pe OS
+        self.click_elem(self.CHOOSE_FILE_BTN)
+        time.sleep(2)  #trebuie time.sleep pentru ca wait nu functioneaza in OS
         keyboard = Controller()
         keyboard.type('C:\\Users\\MNZ\\Desktop\\upload_file_TA\\upload.txt')
         keyboard.press(Key.enter)
@@ -69,35 +69,25 @@ class HomePage(BasePage):
     def sort_products_by_price(self):
         sort = Select(self.identify_elem(self.BTN_SORT_BY))
         sort.select_by_visible_text('Price (High - Low)')
-
-    # def check_if_prices_are_reordered(self):
-    #     products_price_list = []
-    #     products_list = self.driver.find_elements(*self.PRODUCT_PRICE)
-    #     for item in products_list:
-    #         product_price = float(self.read_txt(item[1:]))
-    #         products_price_list.append(product_price)
-    #     ordered_products_price_list = sorted(products_price_list)
-    #     assert products_price_list == ordered_products_price_list
+        time.sleep(1)
 
     def check_if_prices_are_reordered(self):
         products_price_list = []
-        products_list = self.driver.find_elements(*self.PRODUCT_PRICE)
-        for item in products_list:
-            product_price = self.read_txt(item)
-            product_price = float(product_price.replace('$', ''))
+        for item in self.driver.find_elements(*self.PRODUCT_PRICE):
+            product_price = float(item.text[1:])
             products_price_list.append(product_price)
-        ordered_products_price_list = sorted(products_price_list)
-        assert products_price_list == ordered_products_price_list
+        assert products_price_list == sorted(products_price_list, reverse=True)
 
     def modify_max_price(self):
         action = ActionChains(self.driver).drag_and_drop_by_offset(self.identify_elem(self.BTN_PRICE_MAX), -116, 0)
         action.perform()
 
-    # def check_if_prices_are_lower_than_max_price(self):
-    #     products_price_list = []
-    #     for item in self.driver.find_elements(self.PRODUCT_PRICE):
-    #         product_price = float(self.read_txt(self.PRODUCT_PRICE)[1:])
-    #         products_price_list.append(product_price)
-    #     max_price_value = float(self.identify_elem(self.BTN_PRICE_MAX).get_attribute("aria-valuenow"))
-    #     for item in products_price_list:
-    #         assert item <= max_price_value
+    def check_if_prices_are_lower_than_max_price(self):
+        time.sleep(1)
+        products_price_list = []
+        for item in self.driver.find_elements(*self.PRODUCT_PRICE):
+            product_price = float(item.text[1:])
+            products_price_list.append(product_price)
+        max_price_value = float(self.identify_elem(self.BTN_PRICE_MAX).get_attribute("aria-valuenow"))
+        for i in products_price_list:
+            assert i <= max_price_value

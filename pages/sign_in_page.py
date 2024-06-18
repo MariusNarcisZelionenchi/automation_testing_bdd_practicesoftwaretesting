@@ -222,7 +222,6 @@ class SignInPage(BasePage):
             WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.BTN_SUBMIT))
             for field_name, value in form_data.items():
                 try:
-                    # Find the input field by name attribute and fill it
                     input_element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(field_name))
                     input_element.clear()
                     input_element.send_keys(value)

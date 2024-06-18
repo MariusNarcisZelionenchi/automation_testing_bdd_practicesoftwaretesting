@@ -78,7 +78,26 @@ def step_impl(context):
 
 @then('Payment method is requested')
 def step_impl(context):
-    context.account_page_obj.is_payment_msg_displayed()
+    context.account_page_obj.is_payment_method_displayed()
+
+
+@when('I select "{payment_method}" as desired payment method')
+def step_impl(context, payment_method):
+    context.account_page_obj.select_payment_method(payment_method)
+
+
+@then('The confirmation message "{confirmation_msg}" is displayed')
+def step_impl(context, confirmation_msg):
+    context.account_page_obj.check_confirmation_msg(confirmation_msg)
+
+
+@when('I click the <<Confirm>> button')
+def step_impl(context):
+    context.account_page_obj.click_confirm_btn()
+
+@then('The invoice message is displayed')
+def step_impl(context):
+    context.account_page_obj.check_invoice_msg()
 
 
 @when('I check if a user is logged in')
