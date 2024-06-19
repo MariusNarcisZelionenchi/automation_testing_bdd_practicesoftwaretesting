@@ -67,6 +67,7 @@ Check if a user is logged in and sign him out
 
 ![image](https://github.com/MariusNarcisZelionenchi/automation_testing_bdd_practicesoftwaretesting/assets/123659805/7aa331d8-8916-4a2d-b58c-007de738fb47)
 
-![image](https://github.com/MariusNarcisZelionenchi/automation_testing_bdd_practicesoftwaretesting/assets/123659805/1a4a989e-efcc-41e2-bb48-7897afcc062f)
+![image](https://github.com/MariusNarcisZelionenchi/automation_testing_bdd_practicesoftwaretesting/assets/123659805/e6f7c32a-c9a4-4a96-9eab-aeddb939bc1d)
+
 
 
