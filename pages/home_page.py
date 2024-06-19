@@ -22,8 +22,8 @@ class HomePage(BasePage):
     EMAIL_INPUT = (By.XPATH, '//input[@id="email"]')
     SELECT_SUBJECT_DROPDOWN = (By.XPATH, '//select[@id="subject"]')
     MESSAGE_INPUT = (By.XPATH, '//textarea[@id="message"]')
-    CHOOSE_FILE_BTN = (By.XPATH, '//input[@id="attachment"]')
-    SEND_BTN = (By.XPATH, '//input[@value="Send"]')
+    BTN_CHOOSE_FILE = (By.XPATH, '//input[@id="attachment"]')
+    BTN_SEND = (By.XPATH, '//input[@value="Send"]')
     CONTACT_MSG = (By.XPATH, '//div[@role="alert"]')
 
     def navigate_to_home(self):
@@ -45,7 +45,17 @@ class HomePage(BasePage):
         self.write_txt(self.MESSAGE_INPUT, text)
 
     def choose_file_to_upload(self):
-        self.click_elem(self.CHOOSE_FILE_BTN)
+        # self.click_elem(self.BTN_CHOOSE_FILE)
+        choose_file_btn = self.driver.find_element(*self.BTN_CHOOSE_FILE)
+        action = ActionChains(self.driver)
+        action.move_to_element(choose_file_btn)
+        action.click().perform()
+
+        ### TRB SA INCERC SA FAC CLICK PE O LOCATIE PRIN COORDONATE PIXEL
+        # elem = self.identify_elem(self.BTN_CHOOSE_FILE)
+        # location = elem.location
+        # action = ActionChains(self.driver).click(location)
+        # action.perform()
         time.sleep(2)  #trebuie time.sleep pentru ca wait nu functioneaza in OS
         keyboard = Controller()
         keyboard.type('C:\\Users\\MNZ\\Desktop\\upload_file_TA\\upload.txt')
@@ -53,7 +63,7 @@ class HomePage(BasePage):
         keyboard.release(Key.enter)
 
     def click_send(self):
-        self.click_elem(self.SEND_BTN)
+        self.click_elem(self.BTN_SEND)
 
     def is_contact_msg_displayed(self, msg):
         assert self.is_elem_displayed(self.CONTACT_MSG) and self.read_txt(self.CONTACT_MSG) == msg

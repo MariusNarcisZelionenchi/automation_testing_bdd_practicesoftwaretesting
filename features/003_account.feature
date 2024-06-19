@@ -54,11 +54,17 @@ Feature: Check the functionality of the <<Account Page>>
      When I click the <<Confirm>> button
      Then The invoice message is displayed
 
+  @invoice
+  Scenario: Check that I can download the invoice
+    Given I am on the <<Account>> page
+    When I click on <<Dropdown>> button
+    When I click <<My invoices>> button
+    When I click <<Details>> button
+    Then I click <<Download PDF>> button to download the invoice
+
   @logout
   Scenario: Check if a user is logged in and sign him out
-    Given I am on the <<Home>> page and I navigate to <<Sign In>> page
-    When I insert the fake registered email and the fake registered password
-    When I click the <<Login>> button
+    Given I am on the <<Account>> page
     When I check if a user is logged in
     When I sign the user out
     Then The <<Sign In>> button is displayed

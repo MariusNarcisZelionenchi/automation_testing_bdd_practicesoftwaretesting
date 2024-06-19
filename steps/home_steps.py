@@ -32,7 +32,7 @@ def step_impl(context):
 
 @when('I click <<Send>>')
 def step_impl(context):
-    context.home_page_obj.click_send(context)
+    context.home_page_obj.click_send()
 
 
 @then('The "{msg}" message is displayed')

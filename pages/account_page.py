@@ -1,6 +1,6 @@
 import time
 
-from selenium.webdriver import Keys
+from selenium.webdriver import Keys, ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -27,7 +27,7 @@ class AccountPage(BasePage):
     TOTAL_UNIT_PRICE = (By.XPATH, '/html/body/app-root/div/app-checkout/aw-wizard/div/aw-wizard-step[1]/app-cart/div/table/tbody/tr/td[4]/span')
     TOTAL_PRICE = (By.XPATH, '(//td[@class="col-md-2 text-end"])[4]')
     QUANTITY = (By.XPATH, '//input[@class="form-control quantity"]')
-    BTN_PROCEED_TO_CHECKOUT_1 = (By.XPATH, '//button[@data-test="proceed-1"]')
+    BTN_PROCEED_TO_CHECKOUT_1 = (By.XPATH, '//div[@class="ng-star-inserted"]//button[@type="button"][normalize-space()="Proceed to checkout"]')
     MSG_PROCEED_TO_CHECKOUT = (By.XPATH, '//p[@class="ng-star-inserted"]')
     BTN_PROCEED_TO_CHECKOUT_2 = (By.XPATH, '//button[@data-test="proceed-2"]')
     BOX_ADDRESS = (By.ID, 'address')
@@ -52,6 +52,9 @@ class AccountPage(BasePage):
     BOX_VALIDATION_CODE = (By.XPATH, '//input[@id="validation_code"]')
     PAYMENT_CONFIRMATION_MSG = (By.XPATH, '//div[@class="help-block"]')
     INVOICE_MSG = (By.XPATH, '//div[@id="order-confirmation"]')
+    BTN_INVOICES = (By.XPATH, '//a[normalize-space()="My invoices"]')
+    BTN_DETAILS = (By.XPATH, '//a[normalize-space()="Details"]')
+    BTN_DOWNLOAD_PDF = (By.XPATH, '//button[@data-test="download-invoice"]')
 
 
 
@@ -125,31 +128,34 @@ class AccountPage(BasePage):
         assert self.is_elem_displayed(self.BTN_PAYMENT_METHOD)
 
     def select_payment_method(self, payment_method):
-        iban = Select(self.identify_elem(self.BTN_PAYMENT_METHOD))
-        if iban.select_by_visible_text(payment_method) == 'Bank Transfer':
+        pay = Select(self.identify_elem(self.BTN_PAYMENT_METHOD))
+        pay.select_by_visible_text(payment_method)
+
+        if payment_method == 'Bank Transfer':
             self.write_txt(self.BOX_BANK_NAME, 'Iron Bank of Braavos')
             self.write_txt(self.BOX_ACCOUNT_NAME, 'Tycho Nestoris')
-            self.write_txt(self.BOX_ACCOUNT_NAME, '010101010101010101')
+            self.write_txt(self.BOX_ACCOUNT_NUMBER, '010101010101010101')
             self.click_elem(self.BTN_CONFIRM)
-        elif iban.select_by_visible_text(payment_method) == 'Cash on Delivery':
+        elif payment_method == 'Cash on Delivery':
             self.click_elem(self.BTN_CONFIRM)
-        elif iban.select_by_visible_text(payment_method) == 'Credit Card':
+        elif payment_method == 'Credit Card':
             self.write_txt(self.BOX_CREDIT_CARD_NUMBER, '1234-1234-1234-1234')
             self.write_txt(self.BOX_EXPIRATION_DATE, '03/2028')
             self.write_txt(self.BOX_CVV, '111')
             self.write_txt(self.BOX_CARD_HOLDER_NAME, 'Card Holder')
             self.click_elem(self.BTN_CONFIRM)
-        elif iban.select_by_visible_text(payment_method) == 'Buy Now Pay Later':
+        elif payment_method == 'Buy Now Pay Later':
             installments = Select(self.identify_elem(self.BTN_MONTHLY_INSTALLMENTS))
             installments.select_by_visible_text('9 Monthly Installments')
             self.click_elem(self.BTN_CONFIRM)
-        elif iban.select_by_visible_text(payment_method) == 'Gift Card':
+        elif payment_method == 'Gift Card':
             self.write_txt(self.BOX_GIFT_CARD_NUMBER, 'mnz1234')
             self.write_txt(self.BOX_VALIDATION_CODE, '170379')
             self.click_elem(self.BTN_CONFIRM)
 
     def check_confirmation_msg(self, confirmation_msg):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.PAYMENT_CONFIRMATION_MSG))
+        # time.sleep(2)
         assert self.is_elem_displayed(self.PAYMENT_CONFIRMATION_MSG) and self.read_txt(self.PAYMENT_CONFIRMATION_MSG) == confirmation_msg
 
     def click_confirm_btn(self):
@@ -158,6 +164,21 @@ class AccountPage(BasePage):
     def check_invoice_msg(self):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.INVOICE_MSG))
         assert self.is_elem_displayed(self.INVOICE_MSG)
+
+    def click_dropdown_menu(self):
+        self.click_elem(self.BTN_USER_DROPDOWN)
+
+    def click_my_invoices_btn(self):
+        self.click_elem(self.BTN_INVOICES)
+
+    def click_details_btn(self):
+        self.click_elem(self.BTN_DETAILS)
+
+    def click_download_btn(self):
+        download_pdf = self.driver.find_element(*self.BTN_DOWNLOAD_PDF)
+        action = ActionChains(self.driver)
+        action.move_to_element(download_pdf)
+        action.click().perform()
 
     def check_if_user_is_logged_in(self):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(self.BTN_USER_DROPDOWN))

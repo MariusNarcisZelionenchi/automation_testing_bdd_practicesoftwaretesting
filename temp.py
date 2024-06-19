@@ -182,8 +182,14 @@ from selenium.webdriver.support.ui import Select
 # print(fake.city())
 
 
-def my_func(my_param):
-    print(f'Functia "my_func" are parametrul {my_param}')
+# def my_func(my_param):
+#     print(f'Functia "my_func" are parametrul {my_param}')
+#
+# my_func('my_arg')
+# #OUTPUT: Functia "my_func" are parametrul my_arg
 
-my_func('my_arg')
-#OUTPUT: Functia "my_func" are parametrul my_arg
+x = 3.
+print(type(x), x)
+
+s = f'Hello world!'
+print(s)

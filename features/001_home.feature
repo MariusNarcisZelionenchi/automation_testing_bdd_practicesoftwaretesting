@@ -9,7 +9,7 @@ Feature: Test the functionality if the <<Home>> page
     When I click the <<Contact>> button
     When I insert "Johnny" as first name, "Mnemonic" as last name and "J_M@pharmakom.org" as email
     When I select a subject
-    When I insert "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." as message
+    When I insert "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..." as message
     When I choose a file to upload
     When I click <<Send>>
     Then The "Thanks for your message! We will contact you shortly." message is displayed

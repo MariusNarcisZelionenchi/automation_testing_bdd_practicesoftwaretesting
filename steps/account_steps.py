@@ -105,6 +105,26 @@ def step_impl(context):
     context.account_page_obj.check_if_user_is_logged_in()
 
 
+@when('I click on <<Dropdown>> button')
+def step_impl(context):
+    context.account_page_obj.click_dropdown_menu()
+
+
+@when('I click <<My invoices>> button')
+def step_impl(context):
+    context.account_page_obj.click_my_invoices_btn()
+
+
+@when('I click <<Details>> button')
+def step_impl(context):
+    context.account_page_obj.click_details_btn()
+
+
+@then('I click <<Download PDF>> button to download the invoice')
+def step_impl(context):
+    context.account_page_obj.click_download_btn()
+
+
 @when('I sign the user out')
 def step_impl(context):
     context.account_page_obj.sign_out()
